@@ -22,7 +22,6 @@ bookshelf.plugin(require('bookshelf-paranoia'))
 const Model = bookshelf.Model.extend({
   hasTimestamps: ['created_at', 'updated_at', 'deleted_at'],
   softDelete: true,
-  hidden: ['createdAt', 'updatedAt', 'deletedAt'],
   paginate (limit = 10, offset = 0) {
     return this.fetchPage({ limit, offset }).then((res) => res.models)
   },

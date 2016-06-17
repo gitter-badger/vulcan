@@ -5,7 +5,7 @@ import { Model } from 'core/bookshelf'
 
 export default Model.extend({
   tableName: 'users',
-  hidden: ['createdAt', 'updatedAt', 'deletedAt', 'password'],
+  hidden: ['password'],
   initialize () {
     this.on('creating', (...args) => this.hashPassword(...args))
   },
