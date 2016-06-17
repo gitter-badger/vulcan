@@ -7,7 +7,6 @@ export function * list () {
 
 export function * create () {
   const user = yield User.create(this.request.body)
-  yield this.team.users().attach(user)
 
   return yield this.send({ user })
 }
