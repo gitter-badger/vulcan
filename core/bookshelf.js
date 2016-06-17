@@ -6,7 +6,9 @@ import config from 'core/config'
 const knexConfig = {
   client: config.get('db.driver', 'pg'),
   debug: config.get('app.debug', false),
-  connection: config.get('db.connection')
+  connection: config.get('db.connection'),
+  seeds: config.get('db.seeds'),
+  migrations: config.get('db.migrations')
 }
 const db = knex(knexConfig)
 const bookshelf = require('bookshelf')(db)
