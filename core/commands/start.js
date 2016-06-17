@@ -1,7 +1,15 @@
 import server from 'core/server'
 
-export default (arg) => (opts) => {
-  server.listen(opts.port, () => {
-    console.log(`Vulcan running on port ${opts.port}`)
+export const command = 'start'
+export const description = 'start your app'
+export const options = [{
+  flags: '-p, --port [int]',
+  description: 'the port the app will be running on',
+  default: process.env.PORT || 1337
+}]
+
+export const action = (done) => ({ port }) => {
+  server.listen(port, () => {
+    console.log(`Vulcan running on port ${port}`)
   })
 }

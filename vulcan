@@ -5,14 +5,18 @@ require('app-module-path').addPath(require('path').resolve(__dirname))
 
 const program = require('commander')
 const { version } = require('core/vulcan')
-const { start } = require('core/commands')
+const { db } = require('core/bookshelf')
+const commands = require('core/commands')
 program.version(version)
 
-program.command('start')
-  .alias('serve')
-  .description('Start your Vulcan app')
-  .option('-p, --port <int>', 'The port on which the app will be running', process.env.PORT || 1337)
-  .action(start())
+commands.map((cmd) => {
+  const command = program.command(cmd.command)
+  command.description(cmd.description)
+  if (cmd.options) {
+    cmd.options.map((opt) => command.option(opt.flags, opt.description, opt.default))
+  }
+  command.action(cmd.action(db.destroy))
+})
 
 program.parse(process.argv)
 
