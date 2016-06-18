@@ -1,3 +1,9 @@
 export default {
-  debug: false
+  debug: false,
+  views: {
+    extension: 'jade',
+    map: {
+      jade: 'pug'
+    }
+  }
 }

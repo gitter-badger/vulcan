@@ -1,7 +1,7 @@
 import logger from 'koa-logger'
 
 export default function () {
-  if (process.env.NODE_ENV !== 'production') {
+  if (!~['production', 'test'].indexOf(process.env.NODE_ENV)) {
     this.use(logger())
   }
 }
