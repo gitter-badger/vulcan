@@ -16,7 +16,7 @@ const template = (table = 'table') => `export const up = ({ schema, raw, fn }) =
   table.timestamp('deleted_at').nullable().defaultTo(raw('NULL'))
 })
 
-export const down => ({ schema }) => schema.dropTable('${table}')
+export const down = ({ schema }) => schema.dropTable('${table}')
 `
 
 export const action = (done) => (name, { table }) => {

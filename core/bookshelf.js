@@ -4,7 +4,8 @@ import { defaultsDeep, isArray, isNumber, reduce, camelCase, snakeCase } from 'l
 import config from 'core/config'
 
 const knexConfig = {
-  client: config.get('db.driver', 'pg'),
+  client: config.get('db.client', 'pg'),
+  useNullAsDefault: false,
   debug: config.get('app.debug', false),
   connection: config.get('db.connection'),
   seeds: config.get('db.seeds'),

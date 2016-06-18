@@ -1,15 +1,16 @@
 import { resolve } from 'path'
 import { writeFileSync } from 'fs'
 import { upperFirst } from 'lodash'
+import { pluralize } from 'inflection'
 
 export const command = 'gen:seed <model>'
 export const description = 'create a new seed file'
 
 const template = (Model) => `import Promise from 'bluebird'
+import faker from 'faker'
 import ${upperFirst(Model)} from 'app/models/${Model.toLowerCase()}'
 
-export const seed = (table) => Promise.all([
-  table.raw(\`truncate table \${${Model}.prototype.tableName} restart identity cascade\`),
+export const seed = (db) => Promise.all([
   ${Model}.create([{
     field: 'value_2'
   }, {
@@ -19,7 +20,7 @@ export const seed = (table) => Promise.all([
 `
 
 export const action = (done) => (model, { table }) => {
-  const filename = `${model.toLowerCase()}.js`
+  const filename = `${pluralize(model.toLowerCase())}.js`
   writeFileSync(resolve(`database/seeds/${filename}`), template(model))
   console.log(`Created ${filename}`)
   done()
