@@ -4,7 +4,7 @@
   "scripts": {
     "start": "node vulcan start",
     "test": "mocha test/.setup.js test/**/*",
-    "test:coverage": "node ./node_modules/istanbul/lib/cli cover -x 'app/config/**' _mocha -- test/.setup.js test/**/* -R spec"
+    "test:coverage": "node ./node_modules/istanbul/lib/cli cover -x 'app/config/**' -x 'core/**' -x 'database/**' _mocha -- test/.setup.js test/**/* -R spec"
   },
   "dependencies": {
     "@niftyco/babel-node": "~1.0.0",
