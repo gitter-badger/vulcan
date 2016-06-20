@@ -1,6 +1,5 @@
 import Promise from 'bluebird'
 import { compare, hash } from 'bcrypt'
-import { first } from 'lodash'
 import joi from 'joi'
 import { Model } from 'core/bookshelf'
 
