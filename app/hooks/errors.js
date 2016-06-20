@@ -6,6 +6,6 @@ export default function () {
     if (e.message === 'EmptyResponse') {
       return new NotFoundError()
     }
-    return new BadRequestError()
+    return new BadRequestError(e.message)
   }))
 }

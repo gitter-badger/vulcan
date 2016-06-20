@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import request from 'supertest'
 import cheerio from 'cheerio'
+import { db } from 'core/bookshelf'
 import server from 'core/server'
 
 let app = null
@@ -8,7 +9,11 @@ let app = null
 describe('Vulcan Application', () => {
   describe('GET /', () => {
     before(() => {
-      app = request(server.listen())
+      return db.migrate.latest()
+        .then(() => db.seed.run())
+        .then(() => {
+          app = request(server.listen())
+        })
     })
 
     it(`should return "Hello World"`, (done) => {
