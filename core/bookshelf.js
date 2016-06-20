@@ -1,6 +1,9 @@
 import Promise from 'bluebird'
 import knex from 'knex'
-import { defaultsDeep, isArray, isNumber, reduce, camelCase, snakeCase } from 'lodash'
+import joi from 'joi'
+import {
+  defaultsDeep, isArray, isNumber, reduce, camelCase, snakeCase, difference
+} from 'lodash'
 import config from 'core/config'
 
 const knexConfig = {
@@ -23,6 +26,39 @@ bookshelf.plugin(require('bookshelf-paranoia'))
 const Model = bookshelf.Model.extend({
   hasTimestamps: ['created_at', 'updated_at', 'deleted_at'],
   softDelete: true,
+  constructor (...args) {
+    bookshelf.Model.apply(this, args)
+    if (this.validate) {
+      const validation = {
+        created_at: joi.date().optional(),
+        updated_at: joi.date().optional(),
+        deleted_at: joi.date().optional()
+      }
+
+      this.validate = (this.validate.isJoi ? this.validate : joi.object(this.validate)).keys(validation)
+
+      this.on('saving', this.validateSave)
+    }
+  },
+  validateSave (model, attrs, options) {
+    var validation
+    if ((model && !model.isNew()) || (options && (options.method === 'update' || options.patch === true))) {
+      var schemaKeys = this.validate._inner.children.map(({ key }) => key)
+      var presentKeys = Object.keys(attrs)
+      var optionalKeys = difference(schemaKeys, presentKeys)
+      validation = joi.validate(attrs, this.validate.optionalKeys(optionalKeys))
+    } else {
+      validation = joi.validate(this.attributes, this.validate)
+    }
+
+    if (validation.error) {
+      validation.error.tableName = this.tableName
+
+      throw validation.error
+    } else {
+      return validation.value
+    }
+  },
   paginate (limit = 10, offset = 0) {
     return this.fetchPage({ limit, offset }).then((res) => res.models)
   },

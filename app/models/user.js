@@ -1,11 +1,16 @@
 import Promise from 'bluebird'
 import { compare, hash } from 'bcrypt'
 import { first } from 'lodash'
+import joi from 'joi'
 import { Model } from 'core/bookshelf'
 
 export default Model.extend({
   tableName: 'users',
   hidden: ['password'],
+  validate: {
+    email: joi.string().email().required(),
+    password: joi.string().required()
+  },
   initialize () {
     this.on('creating', (...args) => this.hashPassword(...args))
   },
