@@ -9,8 +9,10 @@ import conditionalGet from 'koa-conditional-get'
 import eTag from 'koa-etag'
 import compress from 'koa-compress'
 import helmet from 'koa-helmet'
+import methodOverride from 'koa-methodoverride'
 import config from 'core/config'
 import resource from 'core/resource'
+import logger from 'core/middleware/logger'
 import responseTime from 'core/middleware/response-time'
 import sender from 'core/middleware/sender'
 import noSlash from 'core/middleware/no-slash'
@@ -24,10 +26,15 @@ router.resource = resource.bind(router)
 routes.call(router)
 
 app.use(responseTime())
+if (config.get('logs.enabled', true)) {
+  app.use(logger(config.get('logs.format'), config.get('logs.options')))
+}
+app.use(methodOverride('_method'))
 app.use(views(resolve('app/views'), config.get('app.views')))
 app.use(noSlash())
 app.use(conditionalGet())
 app.use(eTag())
+app.use(compress())
 app.use(bodyParser())
 app.use(helmet())
 app.use(cors())
