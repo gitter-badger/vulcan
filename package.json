@@ -28,7 +28,7 @@
     "koa-cors": "0.0.16",
     "koa-etag": "^2.1.1",
     "koa-helmet": "^1.0.0",
-    "koa-methodoverride": "~2.0.0",
+    "koa-methodoverride": "~1.0.0",
     "koa-router": "^5.4.0",
     "koa-views": "~4.1.0",
     "lodash": "~4.11.1",
