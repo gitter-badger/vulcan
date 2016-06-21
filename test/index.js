@@ -56,6 +56,17 @@ describe('Vulcan Application', () => {
           expect(res.data.user.email).to.equal('test@test.com')
         })
     })
+
+    it ('should return bad request for invalid data', () => {
+      app.post('/users')
+        .send({ email: 'noop' })
+        .expect(400)
+        .end((err, res) => {
+          expect(err).to.be.null
+          expect(res.data.error).to.not.be.empty
+          expect(res.data.error.statusCode).to.equal(400)
+        })
+    })
   })
 
   describe('GET /users/1', () => {
@@ -94,6 +105,14 @@ describe('Vulcan Application', () => {
           expect(err).to.be.null
           expect(res.body.data).to.be.empty()
         })
+    })
+  })
+
+  describe('GET /users/5', () => {
+    it('should return 404 error', () => {
+      app.get('/users/5')
+        .expect(404)
+        .end()
     })
   })
 })
