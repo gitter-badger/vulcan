@@ -16,7 +16,7 @@ export function * list () {
 export function * create () {
   const ${model} = yield ${Model}.create(this.request.body)
 
-  return yield this.send({ ${model} })
+  return yield this.send({ ${model} }, 201)
 }
 
 export function * show () {
@@ -36,7 +36,7 @@ export function * destroy () {
   const ${model} = yield ${Model}.find(this.params.id)
   yield ${model}.destroy()
 
-  return yield this.send({})
+  return yield this.send({}, 204)
 }
 `
 

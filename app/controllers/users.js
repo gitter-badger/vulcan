@@ -8,7 +8,7 @@ export function * list () {
 export function * create () {
   const user = yield User.create(this.request.body)
 
-  return yield this.send({ user })
+  return yield this.send({ user }, 201)
 }
 
 export function * show () {
@@ -28,5 +28,5 @@ export function * destroy () {
   const user = yield User.find(this.params.id)
   yield user.destroy()
 
-  return yield this.send({})
+  return yield this.send({}, 204)
 }

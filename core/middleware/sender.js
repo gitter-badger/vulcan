@@ -9,11 +9,11 @@ const error = (ctx, error) => {
   return response(ctx, { error }, error.statusCode)
 }
 
-const send = function * (data) {
+const send = function * (data, statusCode = 200) {
   if (data instanceof HttpError) {
     return error(this, data)
   } else {
-    return response(this, { data })
+    return response(this, { data }, statusCode)
   }
 }
 
