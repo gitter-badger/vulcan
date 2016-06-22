@@ -6,7 +6,7 @@ require('app-module-path').addPath(require('path').resolve(__dirname))
 const program = require('commander')
 const { db } = require('core/bookshelf')
 const commands = require('core/commands')
-program.version(require('core/vulcan').version)
+program.version(require('core/vulcan').version, '-v, --version')
 
 commands.map((cmd) => {
   const command = program.command(cmd.command)
