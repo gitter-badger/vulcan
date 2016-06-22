@@ -9,9 +9,9 @@ const build = (router, resource, { list, create, show, update, destroy }) => {
 
   list && router.get(`${prefix}.list`, '/', list)
   create && router.post(`${prefix}.create`, '/', create)
-  show && router.get(`${prefix}.show`, `/:id([0-9]+)`, show)
-  update && router.put(`${prefix}.update`, `/:id([0-9]+)`, update)
-  destroy && router.delete(`${prefix}.destroy`, `/:id([0-9]+)`, destroy)
+  show && router.get(`${prefix}.show`, '/:id([0-9]+)', show)
+  update && router.put(`${prefix}.update`, '/:id([0-9]+)', update)
+  destroy && router.delete(`${prefix}.destroy`, '/:id([0-9]+)', destroy)
 
   return router
 }
