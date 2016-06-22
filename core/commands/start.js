@@ -1,4 +1,5 @@
 import env from '@niftyco/env'
+import config from 'core/config'
 import server from 'core/server'
 
 export const command = 'start'
@@ -11,6 +12,6 @@ export const options = [{
 
 export const action = (done) => ({ port }) => {
   server.listen(port, () => {
-    console.log(`Vulcan running on port ${port}`)
+    console.log(`${config.get('app.name', 'vulcan-app')} running on port ${port}`)
   })
 }

@@ -1,5 +1,6 @@
 import { resolve } from 'path'
 import { readdirSync } from 'fs'
+import env from '@niftyco/env'
 import koa from 'koa'
 import Router from 'koa-router'
 import views from 'koa-views'
@@ -20,6 +21,11 @@ import routes from 'app/routes'
 
 const app = koa()
 const router = new Router()
+
+app.name = config.get('app.name', 'vulcan-app')
+app.env = env.get('node_env', 'development')
+app.proxy = config.get('app.proxy', false)
+app.subdomainOffset = config.get('app.subdomainOffset', 2)
 
 router.resource = resource.bind(router)
 
