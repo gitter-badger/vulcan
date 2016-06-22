@@ -9,15 +9,14 @@ const config = {
   drawHorizontalLine: (i, s) => (i === 0 || i === 1 || i === s)
 }
 
-const parseAction = (name, stack) => {
-  const fn = stack[stack.length - 1].name || 'anonymous'
-  return `${fn}()`
-}
+const parsePath = (path) => (path !== '/' && /\/$/.test(path)) ? path.slice(0, path.length - 1) : path
+
+const parseAction = (name, stack) => `${stack[stack.length - 1].name || 'anonymous'}()`
 
 export const action = (done) => () => {
-  const header = ['Name', 'Methods', 'Path', 'Action']
+  const header = ['Name', 'Method(s)', 'Path', 'Action']
   const routes = server.stack.filter((layer) => layer.methods.length > 0)
-    .map(({ name, methods, path, stack }) => [name, methods.join(','), path, parseAction(name, stack)])
+    .map(({ name, methods, path, stack }) => [name, methods.join(','), parsePath(path), parseAction(name, stack)])
 
   console.log(table([header, ...routes], config))
   done()
