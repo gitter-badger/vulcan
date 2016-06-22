@@ -53,4 +53,6 @@ readdirSync(resolve('app/hooks'))
 app.use(router.routes())
 app.use(router.allowedMethods())
 
+app.stack = router.stack
+
 export default app
