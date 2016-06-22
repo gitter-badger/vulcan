@@ -7,7 +7,7 @@ import {
 import config from 'core/config'
 
 const knexConfig = {
-  client: config.get('db.client', 'pg'),
+  client: config.get('db.client', 'sqlite3'),
   useNullAsDefault: false,
   debug: config.get('app.debug', false),
   connection: config.get('db.connection'),
