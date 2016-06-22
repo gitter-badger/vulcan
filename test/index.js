@@ -57,7 +57,7 @@ describe('Vulcan Application', () => {
         })
     })
 
-    it ('should return bad request for invalid data', () => {
+    it('should return bad request for invalid data', () => {
       app.post('/users')
         .send({ email: 'noop' })
         .expect(400)
