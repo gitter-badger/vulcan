@@ -5,6 +5,8 @@
 </div>
 
 ## Install
+
+[![Join the chat at https://gitter.im/aniftyco/vulcan](https://badges.gitter.im/aniftyco/vulcan.svg)](https://gitter.im/aniftyco/vulcan?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ```sh
 $ git clone https://github.com/aniftyco/vulcan.git my-app
 $ cd my-app
